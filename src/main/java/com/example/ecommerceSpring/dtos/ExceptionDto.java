@@ -27,4 +27,5 @@ public class ExceptionDto {
     public void setMessage(String message) {
         this.message = message;
     }
+    
 }

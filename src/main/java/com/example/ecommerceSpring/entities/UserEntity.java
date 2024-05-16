@@ -146,4 +146,5 @@ public class UserEntity implements UserDetails {
                 ", updatedAt=" + updatedAt +
                 '}';
     }
+
 }
