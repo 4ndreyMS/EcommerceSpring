@@ -20,11 +20,11 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    @Autowired
-    private ModelMapper modelMapper;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private ModelMapper modelMapper;
 
     public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
@@ -35,16 +35,16 @@ public class UserService {
     public UserDto authenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserEntity currentUserEntity = (UserEntity) authentication.getPrincipal();
-        return modelMapper.map(currentUserEntity, UserDto.class);
+        return convertToUserDto(currentUserEntity);
     }
 
     public List<UserDto> allUsers() {
         List<UserDto> userDtos = new ArrayList<>();
-        userRepository.findAll().forEach(entity -> userDtos.add(modelMapper.map(entity, UserDto.class)));
+        userRepository.findAll().forEach(entity -> userDtos.add(convertToUserDto(entity)));
         return userDtos;
     }
 
-    public UserEntity createAdministrator(RegisterUserDto input) {
+    public UserDto createAdministrator(RegisterUserDto input) {
         Optional<RoleEntity> optionalRole = roleRepository.findByName(RoleEnum.ADMIN);
 
         if (optionalRole.isEmpty()) {
@@ -57,10 +57,13 @@ public class UserService {
                 .setPassword(passwordEncoder.encode(input.getPassword()))
                 .setRole(optionalRole.get());
 
-        return userRepository.save(user);
+        user = userRepository.save(user);
+        return convertToUserDto(user);
     }
 
-    private UserDto convertToDto(UserEntity userEntity) {
+
+    private UserDto convertToUserDto(UserEntity userEntity) {
         return modelMapper.map(userEntity, UserDto.class);
     }
+
 }

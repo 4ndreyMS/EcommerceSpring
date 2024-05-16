@@ -29,8 +29,8 @@ public class AuthenticationController {
 
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/signup")
-    public ResponseEntity<ApiResponse> register(@RequestBody RegisterUserDto registerUserDto) {
-        UserEntity registeredUserEntity = authenticationService.signup(registerUserDto);
+    public ResponseEntity<ApiResponse<RegisterUserDto>> register(@RequestBody RegisterUserDto registerUserDto) {
+        RegisterUserDto registeredUserEntity = authenticationService.signup(registerUserDto);
 
         return ResponseEntity.ok(new ApiResponse(true, null, registeredUserEntity));
     }
@@ -47,13 +47,13 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
+    public ResponseEntity<ApiResponse<LoginResponse>> authenticate(@RequestBody LoginUserDto loginUserDto) {
         UserEntity authenticatedUserEntity = authenticationService.authenticate(loginUserDto);
 
         String jwtToken = jwtService.generateToken(authenticatedUserEntity);
 
         LoginResponse loginResponse = new LoginResponse().setToken(jwtToken).setExpiresIn(jwtService.getExpirationTime());
 
-        return ResponseEntity.ok(new ApiResponse(true, null, loginResponse));
+        return ResponseEntity.ok(new ApiResponse<>(true, null, loginResponse));
     }
 }

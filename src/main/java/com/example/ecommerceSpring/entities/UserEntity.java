@@ -47,6 +47,19 @@ public class UserEntity implements UserDetails {
         return List.of(authority);
     }
 
+    public UserEntity() {
+    }
+
+    public UserEntity(Integer id, String fullName, String email, String password, Date createdAt, Date updatedAt, RoleEntity role) {
+        this.id = id;
+        this.fullName = fullName;
+        this.email = email;
+        this.password = password;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.role = role;
+    }
+
     public String getPassword() {
         return password;
     }

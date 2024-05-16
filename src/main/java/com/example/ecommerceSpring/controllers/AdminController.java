@@ -1,7 +1,9 @@
 package com.example.ecommerceSpring.controllers;
 
 import com.example.ecommerceSpring.dtos.RegisterUserDto;
+import com.example.ecommerceSpring.dtos.UserDto;
 import com.example.ecommerceSpring.entities.UserEntity;
+import com.example.ecommerceSpring.responses.ApiResponse;
 import com.example.ecommerceSpring.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,9 +23,9 @@ public class AdminController {
 
     @PostMapping
     @PreAuthorize("hasRole('SUPER_ADMIN')")
-    public ResponseEntity<UserEntity> createAdministrator(@RequestBody RegisterUserDto registerUserDto) {
-        UserEntity createdAdmin = userService.createAdministrator(registerUserDto);
+    public ResponseEntity<ApiResponse<UserDto>> createAdministrator(@RequestBody RegisterUserDto registerUserDto) {
+        UserDto createdAdmin = userService.createAdministrator(registerUserDto);
 
-        return ResponseEntity.ok(createdAdmin);
+        return ResponseEntity.ok(new ApiResponse<>(true, null, createdAdmin));
     }
 }

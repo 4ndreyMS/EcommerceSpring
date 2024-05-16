@@ -7,6 +7,8 @@ import com.example.ecommerceSpring.entities.RoleEnum;
 import com.example.ecommerceSpring.entities.UserEntity;
 import com.example.ecommerceSpring.repositories.RoleRepository;
 import com.example.ecommerceSpring.repositories.UserRepository;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +24,8 @@ public class AuthenticationService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    @Autowired
+    private ModelMapper modelMapper;
 
     public AuthenticationService(
             UserRepository userRepository,
@@ -35,7 +39,7 @@ public class AuthenticationService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public UserEntity signup(RegisterUserDto input) {
+    public RegisterUserDto signup(RegisterUserDto input) {
         Optional<RoleEntity> optionalRole = roleRepository.findByName(RoleEnum.USER);
 
         if (optionalRole.isEmpty()) {
@@ -48,7 +52,8 @@ public class AuthenticationService {
                 .setPassword(passwordEncoder.encode(input.getPassword()))
                 .setRole(optionalRole.get());
 
-        return userRepository.save(user);
+        user = userRepository.save(user);
+        return convertToRegisterUserDto(user);
     }
 
     public UserEntity authenticate(LoginUserDto input) {
@@ -68,5 +73,9 @@ public class AuthenticationService {
         userRepository.findAll().forEach(userEntities::add);
 
         return userEntities;
+    }
+
+    private RegisterUserDto convertToRegisterUserDto(UserEntity userEntity) {
+        return modelMapper.map(userEntity, RegisterUserDto.class);
     }
 }
