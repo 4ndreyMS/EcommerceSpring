@@ -1,6 +1,6 @@
 package com.example.ecommerceSpring.seeds;
 
-import com.example.ecommerceSpring.dtos.RegisterUserDto;
+import com.example.ecommerceSpring.dtos.users.RegisterUserDto;
 import com.example.ecommerceSpring.entities.RoleEntity;
 import com.example.ecommerceSpring.entities.RoleEnum;
 import com.example.ecommerceSpring.entities.UserEntity;

@@ -1,7 +1,7 @@
 package com.example.ecommerceSpring.service;
 
-import com.example.ecommerceSpring.dtos.LoginUserDto;
-import com.example.ecommerceSpring.dtos.RegisterUserDto;
+import com.example.ecommerceSpring.dtos.users.LoginUserDto;
+import com.example.ecommerceSpring.dtos.users.RegisterUserDto;
 import com.example.ecommerceSpring.entities.RoleEntity;
 import com.example.ecommerceSpring.entities.RoleEnum;
 import com.example.ecommerceSpring.entities.UserEntity;

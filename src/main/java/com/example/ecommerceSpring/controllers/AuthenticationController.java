@@ -1,7 +1,7 @@
 package com.example.ecommerceSpring.controllers;
 
-import com.example.ecommerceSpring.dtos.LoginUserDto;
-import com.example.ecommerceSpring.dtos.RegisterUserDto;
+import com.example.ecommerceSpring.dtos.users.LoginUserDto;
+import com.example.ecommerceSpring.dtos.users.RegisterUserDto;
 import com.example.ecommerceSpring.entities.UserEntity;
 import com.example.ecommerceSpring.responses.ApiResponse;
 import com.example.ecommerceSpring.responses.LoginResponse;

@@ -1,4 +1,4 @@
-package com.example.ecommerceSpring.dtos;
+package com.example.ecommerceSpring.dtos.users;
 
 public class RegisterUserDto {
     private String email;
