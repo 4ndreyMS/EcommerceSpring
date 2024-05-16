@@ -3,11 +3,11 @@ package com.example.ecommerceSpring.controllers;
 import com.example.ecommerceSpring.dtos.LoginUserDto;
 import com.example.ecommerceSpring.dtos.RegisterUserDto;
 import com.example.ecommerceSpring.entities.UserEntity;
+import com.example.ecommerceSpring.responses.ApiResponse;
 import com.example.ecommerceSpring.responses.LoginResponse;
 import com.example.ecommerceSpring.service.AuthenticationService;
 import com.example.ecommerceSpring.service.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -29,10 +29,10 @@ public class AuthenticationController {
 
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/signup")
-    public ResponseEntity<UserEntity> register(@RequestBody RegisterUserDto registerUserDto) {
+    public ResponseEntity<ApiResponse> register(@RequestBody RegisterUserDto registerUserDto) {
         UserEntity registeredUserEntity = authenticationService.signup(registerUserDto);
 
-        return ResponseEntity.ok(registeredUserEntity);
+        return ResponseEntity.ok(new ApiResponse(true, null, registeredUserEntity));
     }
 
     @GetMapping("/authState")
@@ -47,23 +47,13 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
+    public ResponseEntity<ApiResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
         UserEntity authenticatedUserEntity = authenticationService.authenticate(loginUserDto);
 
         String jwtToken = jwtService.generateToken(authenticatedUserEntity);
 
         LoginResponse loginResponse = new LoginResponse().setToken(jwtToken).setExpiresIn(jwtService.getExpirationTime());
 
-        return ResponseEntity.ok(loginResponse);
-    }
-
-
-    @PostMapping("/logout")
-    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null) {
-            SecurityContextHolder.getContext().setAuthentication(null);
-        }
-        return ResponseEntity.ok(true);
+        return ResponseEntity.ok(new ApiResponse(true, null, loginResponse));
     }
 }
