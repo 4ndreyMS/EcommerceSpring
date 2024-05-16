@@ -13,7 +13,7 @@ import java.util.List;
 
 @Table(name = "users")
 @Entity
-public class User implements UserDetails {
+public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
@@ -36,9 +36,9 @@ public class User implements UserDetails {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
-    private Role role;
+    private RoleEntity role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -80,7 +80,7 @@ public class User implements UserDetails {
         return id;
     }
 
-    public User setId(Integer id) {
+    public UserEntity setId(Integer id) {
         this.id = id;
         return this;
     }
@@ -89,7 +89,7 @@ public class User implements UserDetails {
         return fullName;
     }
 
-    public User setFullName(String fullName) {
+    public UserEntity setFullName(String fullName) {
         this.fullName = fullName;
         return this;
     }
@@ -98,12 +98,12 @@ public class User implements UserDetails {
         return email;
     }
 
-    public User setEmail(String email) {
+    public UserEntity setEmail(String email) {
         this.email = email;
         return this;
     }
 
-    public User setPassword(String password) {
+    public UserEntity setPassword(String password) {
         this.password = password;
         return this;
     }
@@ -112,7 +112,7 @@ public class User implements UserDetails {
         return createdAt;
     }
 
-    public User setCreatedAt(Date createdAt) {
+    public UserEntity setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
         return this;
     }
@@ -121,16 +121,16 @@ public class User implements UserDetails {
         return updatedAt;
     }
 
-    public User setUpdatedAt(Date updatedAt) {
+    public UserEntity setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
         return this;
     }
 
-    public Role getRole() {
+    public RoleEntity getRole() {
         return role;
     }
 
-    public User setRole(Role role) {
+    public UserEntity setRole(RoleEntity role) {
         this.role = role;
         return this;
     }

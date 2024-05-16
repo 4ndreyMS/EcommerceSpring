@@ -1,6 +1,6 @@
 package com.example.LoginCreadentials.seeds;
 
-import com.example.LoginCreadentials.entities.Role;
+import com.example.LoginCreadentials.entities.RoleEntity;
 import com.example.LoginCreadentials.entities.RoleEnum;
 import com.example.LoginCreadentials.repositories.RoleRepository;
 import org.springframework.context.ApplicationListener;
@@ -24,18 +24,18 @@ public class RoleSeeder implements ApplicationListener<ContextRefreshedEvent> {
     }
 
     private void loadRoles() {
-        RoleEnum[] roleNames = new RoleEnum[] { RoleEnum.USER, RoleEnum.ADMIN, RoleEnum.SUPER_ADMIN };
+        RoleEnum[] roleNames = new RoleEnum[]{RoleEnum.USER, RoleEnum.ADMIN, RoleEnum.SUPER_ADMIN};
         Map<RoleEnum, String> roleDescriptionMap = Map.of(
-            RoleEnum.USER, "Default user role",
-            RoleEnum.ADMIN, "Administrator role",
-            RoleEnum.SUPER_ADMIN, "Super Administrator role"
+                RoleEnum.USER, "Default user role",
+                RoleEnum.ADMIN, "Administrator role",
+                RoleEnum.SUPER_ADMIN, "Super Administrator role"
         );
 
         Arrays.stream(roleNames).forEach((roleName) -> {
-            Optional<Role> optionalRole = roleRepository.findByName(roleName);
+            Optional<RoleEntity> optionalRole = roleRepository.findByName(roleName);
 
             optionalRole.ifPresentOrElse(System.out::println, () -> {
-                Role roleToCreate = new Role();
+                RoleEntity roleToCreate = new RoleEntity();
 
                 roleToCreate.setName(roleName)
                         .setDescription(roleDescriptionMap.get(roleName));

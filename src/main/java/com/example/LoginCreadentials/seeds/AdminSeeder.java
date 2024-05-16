@@ -1,9 +1,9 @@
 package com.example.LoginCreadentials.seeds;
 
 import com.example.LoginCreadentials.dtos.RegisterUserDto;
-import com.example.LoginCreadentials.entities.Role;
+import com.example.LoginCreadentials.entities.RoleEntity;
 import com.example.LoginCreadentials.entities.RoleEnum;
-import com.example.LoginCreadentials.entities.User;
+import com.example.LoginCreadentials.entities.UserEntity;
 import com.example.LoginCreadentials.repositories.RoleRepository;
 import com.example.LoginCreadentials.repositories.UserRepository;
 import jakarta.annotation.PostConstruct;
@@ -21,11 +21,10 @@ public class AdminSeeder implements ApplicationListener<ContextRefreshedEvent> {
     private final PasswordEncoder passwordEncoder;
 
 
-
     public AdminSeeder(
-        RoleRepository roleRepository,
-        UserRepository  userRepository,
-        PasswordEncoder passwordEncoder
+            RoleRepository roleRepository,
+            UserRepository userRepository,
+            PasswordEncoder passwordEncoder
     ) {
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
@@ -48,18 +47,18 @@ public class AdminSeeder implements ApplicationListener<ContextRefreshedEvent> {
         RegisterUserDto userDto = new RegisterUserDto();
         userDto.setFullName("Super Admin").setEmail("super.admin@email.com").setPassword("123456");
 
-        Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.SUPER_ADMIN);
-        Optional<User> optionalUser = userRepository.findByEmail(userDto.getEmail());
+        Optional<RoleEntity> optionalRole = roleRepository.findByName(RoleEnum.SUPER_ADMIN);
+        Optional<UserEntity> optionalUser = userRepository.findByEmail(userDto.getEmail());
 
         if (optionalRole.isEmpty() || optionalUser.isPresent()) {
             return;
         }
 
-        var user = new User()
-            .setFullName(userDto.getFullName())
-            .setEmail(userDto.getEmail())
-            .setPassword(passwordEncoder.encode(userDto.getPassword()))
-            .setRole(optionalRole.get());
+        var user = new UserEntity()
+                .setFullName(userDto.getFullName())
+                .setEmail(userDto.getEmail())
+                .setPassword(passwordEncoder.encode(userDto.getPassword()))
+                .setRole(optionalRole.get());
 
         userRepository.save(user);
     }

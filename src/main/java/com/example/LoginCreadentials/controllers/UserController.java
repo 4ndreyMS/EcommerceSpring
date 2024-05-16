@@ -1,6 +1,6 @@
 package com.example.LoginCreadentials.controllers;
 
-import com.example.LoginCreadentials.entities.User;
+import com.example.LoginCreadentials.entities.UserEntity;
 import com.example.LoginCreadentials.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,20 +23,20 @@ public class UserController {
 
     @GetMapping("/me")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<User> authenticatedUser() {
+    public ResponseEntity<UserEntity> authenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        User currentUser = (User) authentication.getPrincipal();
+        UserEntity currentUserEntity = (UserEntity) authentication.getPrincipal();
 
-        return ResponseEntity.ok(currentUser);
+        return ResponseEntity.ok(currentUserEntity);
     }
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
-    public ResponseEntity<List<User>> allUsers() {
+    public ResponseEntity<List<UserEntity>> allUsers() {
 
-        List <User> users = userService.allUsers();
+        List<UserEntity> userEntities = userService.allUsers();
 
-        return ResponseEntity.ok(users);
+        return ResponseEntity.ok(userEntities);
     }
 }

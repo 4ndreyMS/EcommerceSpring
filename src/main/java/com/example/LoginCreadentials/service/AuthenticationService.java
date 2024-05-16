@@ -2,9 +2,9 @@ package com.example.LoginCreadentials.service;
 
 import com.example.LoginCreadentials.dtos.LoginUserDto;
 import com.example.LoginCreadentials.dtos.RegisterUserDto;
-import com.example.LoginCreadentials.entities.Role;
+import com.example.LoginCreadentials.entities.RoleEntity;
 import com.example.LoginCreadentials.entities.RoleEnum;
-import com.example.LoginCreadentials.entities.User;
+import com.example.LoginCreadentials.entities.UserEntity;
 import com.example.LoginCreadentials.repositories.RoleRepository;
 import com.example.LoginCreadentials.repositories.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,10 +24,10 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationService(
-        UserRepository userRepository,
-        RoleRepository roleRepository,
-        AuthenticationManager authenticationManager,
-        PasswordEncoder passwordEncoder
+            UserRepository userRepository,
+            RoleRepository roleRepository,
+            AuthenticationManager authenticationManager,
+            PasswordEncoder passwordEncoder
     ) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
@@ -35,38 +35,38 @@ public class AuthenticationService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User signup(RegisterUserDto input) {
-        Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.USER);
+    public UserEntity signup(RegisterUserDto input) {
+        Optional<RoleEntity> optionalRole = roleRepository.findByName(RoleEnum.USER);
 
         if (optionalRole.isEmpty()) {
             return null;
         }
 
-        var user = new User()
-            .setFullName(input.getFullName())
-            .setEmail(input.getEmail())
-            .setPassword(passwordEncoder.encode(input.getPassword()))
-            .setRole(optionalRole.get());
+        var user = new UserEntity()
+                .setFullName(input.getFullName())
+                .setEmail(input.getEmail())
+                .setPassword(passwordEncoder.encode(input.getPassword()))
+                .setRole(optionalRole.get());
 
         return userRepository.save(user);
     }
 
-    public User authenticate(LoginUserDto input) {
+    public UserEntity authenticate(LoginUserDto input) {
         authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(
-                input.getEmail(),
-                input.getPassword()
-            )
+                new UsernamePasswordAuthenticationToken(
+                        input.getEmail(),
+                        input.getPassword()
+                )
         );
 
         return userRepository.findByEmail(input.getEmail()).orElseThrow();
     }
 
-    public List<User> allUsers() {
-        List<User> users = new ArrayList<>();
+    public List<UserEntity> allUsers() {
+        List<UserEntity> userEntities = new ArrayList<>();
 
-        userRepository.findAll().forEach(users::add);
+        userRepository.findAll().forEach(userEntities::add);
 
-        return users;
+        return userEntities;
     }
 }

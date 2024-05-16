@@ -5,10 +5,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
+import java.util.List;
 
 @Table(name = "roles")
 @Entity
-public class Role {
+public class RoleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
@@ -29,6 +30,9 @@ public class Role {
     @Column(name = "updated_at")
     private Date updatedAt;
 
+    @OneToMany(mappedBy = "role")
+    private List<UserEntity> users;
+
     public Integer getId() {
         return id;
     }
@@ -37,7 +41,7 @@ public class Role {
         return name;
     }
 
-    public Role setName(RoleEnum name) {
+    public RoleEntity setName(RoleEnum name) {
         this.name = name;
         return this;
     }
@@ -46,7 +50,7 @@ public class Role {
         return description;
     }
 
-    public Role setDescription(String description) {
+    public RoleEntity setDescription(String description) {
         this.description = description;
         return this;
     }
@@ -55,7 +59,7 @@ public class Role {
         return createdAt;
     }
 
-    public Role setCreatedAt(Date createdAt) {
+    public RoleEntity setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
         return this;
     }
@@ -64,7 +68,7 @@ public class Role {
         return updatedAt;
     }
 
-    public Role setUpdatedAt(Date updatedAt) {
+    public RoleEntity setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
         return this;
     }

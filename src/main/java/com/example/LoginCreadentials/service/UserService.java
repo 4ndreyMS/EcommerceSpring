@@ -1,9 +1,9 @@
 package com.example.LoginCreadentials.service;
 
 import com.example.LoginCreadentials.dtos.RegisterUserDto;
-import com.example.LoginCreadentials.entities.Role;
+import com.example.LoginCreadentials.entities.RoleEntity;
 import com.example.LoginCreadentials.entities.RoleEnum;
-import com.example.LoginCreadentials.entities.User;
+import com.example.LoginCreadentials.entities.UserEntity;
 import com.example.LoginCreadentials.repositories.RoleRepository;
 import com.example.LoginCreadentials.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,22 +26,22 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public List<User> allUsers() {
-        List<User> users = new ArrayList<>();
+    public List<UserEntity> allUsers() {
+        List<UserEntity> userEntities = new ArrayList<>();
 
-        userRepository.findAll().forEach(users::add);
+        userRepository.findAll().forEach(userEntities::add);
 
-        return users;
+        return userEntities;
     }
 
-    public User createAdministrator(RegisterUserDto input) {
-        Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.ADMIN);
+    public UserEntity createAdministrator(RegisterUserDto input) {
+        Optional<RoleEntity> optionalRole = roleRepository.findByName(RoleEnum.ADMIN);
 
         if (optionalRole.isEmpty()) {
             return null;
         }
 
-        var user = new User()
+        var user = new UserEntity()
                 .setFullName(input.getFullName())
                 .setEmail(input.getEmail())
                 .setPassword(passwordEncoder.encode(input.getPassword()))

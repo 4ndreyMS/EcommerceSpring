@@ -1,7 +1,7 @@
 package com.example.LoginCreadentials.controllers;
 
 import com.example.LoginCreadentials.dtos.RegisterUserDto;
-import com.example.LoginCreadentials.entities.User;
+import com.example.LoginCreadentials.entities.UserEntity;
 import com.example.LoginCreadentials.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,8 +21,8 @@ public class AdminController {
 
     @PostMapping
     @PreAuthorize("hasRole('SUPER_ADMIN')")
-    public ResponseEntity<User> createAdministrator(@RequestBody RegisterUserDto registerUserDto) {
-        User createdAdmin = userService.createAdministrator(registerUserDto);
+    public ResponseEntity<UserEntity> createAdministrator(@RequestBody RegisterUserDto registerUserDto) {
+        UserEntity createdAdmin = userService.createAdministrator(registerUserDto);
 
         return ResponseEntity.ok(createdAdmin);
     }
