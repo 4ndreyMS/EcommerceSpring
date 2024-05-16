@@ -1,6 +1,6 @@
-package com.example.LoginCreadentials.config;
+package com.example.ecommerceSpring.config;
 
-import com.example.LoginCreadentials.repositories.UserRepository;
+import com.example.ecommerceSpring.repositories.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

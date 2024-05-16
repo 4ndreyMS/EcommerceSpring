@@ -1,4 +1,4 @@
-package com.example.LoginCreadentials.responses;
+package com.example.ecommerceSpring.responses;
 
 public class LoginResponse {
     private String token;

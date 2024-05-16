@@ -1,11 +1,11 @@
-package com.example.LoginCreadentials.controllers;
+package com.example.ecommerceSpring.controllers;
 
-import com.example.LoginCreadentials.dtos.LoginUserDto;
-import com.example.LoginCreadentials.dtos.RegisterUserDto;
-import com.example.LoginCreadentials.entities.UserEntity;
-import com.example.LoginCreadentials.responses.LoginResponse;
-import com.example.LoginCreadentials.service.AuthenticationService;
-import com.example.LoginCreadentials.service.JwtService;
+import com.example.ecommerceSpring.dtos.LoginUserDto;
+import com.example.ecommerceSpring.dtos.RegisterUserDto;
+import com.example.ecommerceSpring.entities.UserEntity;
+import com.example.ecommerceSpring.responses.LoginResponse;
+import com.example.ecommerceSpring.service.AuthenticationService;
+import com.example.ecommerceSpring.service.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;

@@ -1,8 +1,8 @@
-package com.example.LoginCreadentials.seeds;
+package com.example.ecommerceSpring.seeds;
 
-import com.example.LoginCreadentials.entities.RoleEntity;
-import com.example.LoginCreadentials.entities.RoleEnum;
-import com.example.LoginCreadentials.repositories.RoleRepository;
+import com.example.ecommerceSpring.entities.RoleEntity;
+import com.example.ecommerceSpring.entities.RoleEnum;
+import com.example.ecommerceSpring.repositories.RoleRepository;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;

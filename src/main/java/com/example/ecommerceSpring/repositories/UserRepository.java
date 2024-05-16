@@ -1,6 +1,6 @@
-package com.example.LoginCreadentials.repositories;
+package com.example.ecommerceSpring.repositories;
 
-import com.example.LoginCreadentials.entities.UserEntity;
+import com.example.ecommerceSpring.entities.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

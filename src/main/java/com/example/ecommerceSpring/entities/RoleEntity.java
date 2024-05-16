@@ -1,4 +1,4 @@
-package com.example.LoginCreadentials.entities;
+package com.example.ecommerceSpring.entities;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;

@@ -1,7 +1,7 @@
-package com.example.LoginCreadentials.controllers;
+package com.example.ecommerceSpring.controllers;
 
-import com.example.LoginCreadentials.entities.UserEntity;
-import com.example.LoginCreadentials.service.UserService;
+import com.example.ecommerceSpring.entities.UserEntity;
+import com.example.ecommerceSpring.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;

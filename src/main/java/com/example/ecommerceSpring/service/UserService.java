@@ -1,11 +1,11 @@
-package com.example.LoginCreadentials.service;
+package com.example.ecommerceSpring.service;
 
-import com.example.LoginCreadentials.dtos.RegisterUserDto;
-import com.example.LoginCreadentials.entities.RoleEntity;
-import com.example.LoginCreadentials.entities.RoleEnum;
-import com.example.LoginCreadentials.entities.UserEntity;
-import com.example.LoginCreadentials.repositories.RoleRepository;
-import com.example.LoginCreadentials.repositories.UserRepository;
+import com.example.ecommerceSpring.dtos.RegisterUserDto;
+import com.example.ecommerceSpring.entities.RoleEntity;
+import com.example.ecommerceSpring.entities.RoleEnum;
+import com.example.ecommerceSpring.entities.UserEntity;
+import com.example.ecommerceSpring.repositories.RoleRepository;
+import com.example.ecommerceSpring.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

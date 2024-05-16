@@ -1,4 +1,4 @@
-package com.example.LoginCreadentials.dtos;
+package com.example.ecommerceSpring.dtos;
 
 public class RegisterUserDto {
     private String email;
