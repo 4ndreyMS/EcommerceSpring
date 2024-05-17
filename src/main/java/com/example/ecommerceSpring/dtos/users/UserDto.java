@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class UserDto {
 
-    private Integer id;
+    private Long id;
     private String fullName;
     private String email;
     private String password;
@@ -17,7 +17,7 @@ public class UserDto {
     public UserDto() {
     }
 
-    public UserDto(Integer id, String fullName, String email, String password, Date createdAt, Date updatedAt, RoleEntity role) {
+    public UserDto(Long id, String fullName, String email, String password, Date createdAt, Date updatedAt, RoleEntity role) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
@@ -27,11 +27,11 @@ public class UserDto {
         this.role = role;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

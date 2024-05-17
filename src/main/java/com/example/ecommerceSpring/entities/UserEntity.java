@@ -15,9 +15,9 @@ import java.util.List;
 @Entity
 public class UserEntity implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false)
     private String fullName;
@@ -40,6 +40,16 @@ public class UserEntity implements UserDetails {
     @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
     private RoleEntity role;
 
+    @OneToOne(mappedBy = "user")
+    private CartEntity cart;
+
+    @OneToOne(mappedBy = "user")
+    private WishListEntity wishList;
+
+    @OneToMany(mappedBy = "user")
+    private List<OrderEntity> orders;
+
+    //    methods
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.getName().toString());
@@ -50,7 +60,7 @@ public class UserEntity implements UserDetails {
     public UserEntity() {
     }
 
-    public UserEntity(Integer id, String fullName, String email, String password, Date createdAt, Date updatedAt, RoleEntity role) {
+    public UserEntity(Long id, String fullName, String email, String password, Date createdAt, Date updatedAt, RoleEntity role) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
@@ -89,11 +99,11 @@ public class UserEntity implements UserDetails {
         return true;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public UserEntity setId(Integer id) {
+    public UserEntity setId(Long id) {
         this.id = id;
         return this;
     }
