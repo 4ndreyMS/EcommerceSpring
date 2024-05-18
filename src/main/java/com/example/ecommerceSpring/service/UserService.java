@@ -3,7 +3,7 @@ package com.example.ecommerceSpring.service;
 import com.example.ecommerceSpring.dtos.users.RegisterUserDto;
 import com.example.ecommerceSpring.dtos.users.UserDto;
 import com.example.ecommerceSpring.entities.RoleEntity;
-import com.example.ecommerceSpring.entities.RoleEnum;
+import com.example.ecommerceSpring.enums.RoleEnum;
 import com.example.ecommerceSpring.entities.UserEntity;
 import com.example.ecommerceSpring.repositories.RoleRepository;
 import com.example.ecommerceSpring.repositories.UserRepository;

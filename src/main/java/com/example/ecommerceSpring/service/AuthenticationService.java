@@ -3,13 +3,16 @@ package com.example.ecommerceSpring.service;
 import com.example.ecommerceSpring.dtos.users.LoginUserDto;
 import com.example.ecommerceSpring.dtos.users.RegisterUserDto;
 import com.example.ecommerceSpring.entities.RoleEntity;
-import com.example.ecommerceSpring.entities.RoleEnum;
+import com.example.ecommerceSpring.enums.RoleEnum;
 import com.example.ecommerceSpring.entities.UserEntity;
+import com.example.ecommerceSpring.exception.CustomException;
 import com.example.ecommerceSpring.repositories.RoleRepository;
 import com.example.ecommerceSpring.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -57,12 +60,17 @@ public class AuthenticationService {
     }
 
     public UserEntity authenticate(LoginUserDto input) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        input.getEmail(),
-                        input.getPassword()
-                )
-        );
+
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            input.getEmail(),
+                            input.getPassword()
+                    )
+            );
+        } catch (BadCredentialsException e) {
+            throw new CustomException(e.getMessage(), HttpStatus.FORBIDDEN);
+        }
 
         return userRepository.findByEmail(input.getEmail()).orElseThrow();
     }

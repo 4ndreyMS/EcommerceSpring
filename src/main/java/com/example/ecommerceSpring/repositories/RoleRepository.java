@@ -1,7 +1,7 @@
 package com.example.ecommerceSpring.repositories;
 
 import com.example.ecommerceSpring.entities.RoleEntity;
-import com.example.ecommerceSpring.entities.RoleEnum;
+import com.example.ecommerceSpring.enums.RoleEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

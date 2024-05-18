@@ -1,4 +1,4 @@
-package com.example.ecommerceSpring.entities;
+package com.example.ecommerceSpring.enums;
 
 public enum RoleEnum {
     USER,
