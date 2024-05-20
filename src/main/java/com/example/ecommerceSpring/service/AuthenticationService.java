@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class AuthenticationService {
@@ -55,6 +57,10 @@ public class AuthenticationService {
                 .setPassword(passwordEncoder.encode(input.getPassword()))
                 .setRole(optionalRole.get());
 
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new CustomException("An account with this email address already exists. Please log in or choose a different email.", HttpStatus.CONFLICT);
+        }
+
         user = userRepository.save(user);
         return convertToRegisterUserDto(user);
     }
@@ -85,5 +91,18 @@ public class AuthenticationService {
 
     private RegisterUserDto convertToRegisterUserDto(UserEntity userEntity) {
         return modelMapper.map(userEntity, RegisterUserDto.class);
+    }
+
+    public static boolean isValidPassword(String password) {
+        // Define the regex pattern
+        String pattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$";
+
+        // Compile the pattern
+        Pattern regex = Pattern.compile(pattern);
+
+        // Match the password against the pattern
+        Matcher matcher = regex.matcher(password);
+
+        return matcher.matches();
     }
 }

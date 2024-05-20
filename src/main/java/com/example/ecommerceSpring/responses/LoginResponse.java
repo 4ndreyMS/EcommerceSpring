@@ -2,6 +2,16 @@ package com.example.ecommerceSpring.responses;
 
 public class LoginResponse {
     private String token;
+    private String fullName;
+
+    public LoginResponse() {
+    }
+
+    public LoginResponse(String token, String fullName, long expiresIn) {
+        this.token = token;
+        this.fullName = fullName;
+        this.expiresIn = expiresIn;
+    }
 
     private long expiresIn;
 
@@ -21,6 +31,14 @@ public class LoginResponse {
     public LoginResponse setExpiresIn(long expiresIn) {
         this.expiresIn = expiresIn;
         return this;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     @Override
