@@ -1,15 +1,11 @@
-package com.example.ecommerceSpring.entities;
+package com.example.ecommerceSpring.dtos;
 
+import com.example.ecommerceSpring.entities.ProductEntity;
 import com.example.ecommerceSpring.enums.CategoryEnum;
-import jakarta.persistence.*;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
-import java.util.List;
-
-@Entity
-@Table(name = "products")
-public class ProductEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ProductDto {
     private long id;
     private String name;
     private String description;
@@ -17,27 +13,15 @@ public class ProductEntity {
     private double price;
     private int stockQuantity;
     private String image;
-    @Enumerated(EnumType.STRING)
     private CategoryEnum category;
     private boolean featuredStatus;
     private boolean activeStatus;
     private boolean deletedStatus;
-    //rel with CartProduct
-    @OneToMany(mappedBy = "product")
-    private List<CartProductEntity> cartProducts;
-    //rel with WishListProduct
-    @OneToMany(mappedBy = "product")
-    private List<WishListProductEntity> wishListProducts;
 
-    @OneToMany(mappedBy = "product")
-    private List<OrderProductEntity> orderProducts;
-
-    //logic
-
-    public ProductEntity() {
+    public ProductDto() {
     }
 
-    public ProductEntity(long id, String name, String description, String summary, double price, int stockQuantity, String image, CategoryEnum category, boolean featuredStatus, boolean activeStatus, boolean deletedStatus) {
+    public ProductDto(long id, String name, String description, String summary, double price, int stockQuantity, String image, CategoryEnum category, boolean featuredStatus, boolean activeStatus, boolean deletedStatus) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -51,7 +35,7 @@ public class ProductEntity {
         this.deletedStatus = deletedStatus;
     }
 
-    public boolean getFeaturedStatus() {
+    public boolean isFeaturedStatus() {
         return featuredStatus;
     }
 
@@ -59,11 +43,11 @@ public class ProductEntity {
         this.featuredStatus = featuredStatus;
     }
 
-    public boolean getActiveStatus() {
+    public boolean isActiveStatus() {
         return activeStatus;
     }
 
-    public void getActiveStatus(boolean activeStatus) {
+    public void setActiveStatus(boolean activeStatus) {
         this.activeStatus = activeStatus;
     }
 
@@ -139,27 +123,7 @@ public class ProductEntity {
         this.category = category;
     }
 
-    public List<CartProductEntity> getCartProducts() {
-        return cartProducts;
-    }
-
-    public void setCartProducts(List<CartProductEntity> cartProducts) {
-        this.cartProducts = cartProducts;
-    }
-
-    public List<WishListProductEntity> getWishListProducts() {
-        return wishListProducts;
-    }
-
-    public void setWishListProducts(List<WishListProductEntity> wishListProducts) {
-        this.wishListProducts = wishListProducts;
-    }
-
-    public List<OrderProductEntity> getOrderProducts() {
-        return orderProducts;
-    }
-
-    public void setOrderProducts(List<OrderProductEntity> orderProducts) {
-        this.orderProducts = orderProducts;
+    public ProductEntity toEntity() {
+        return new ProductEntity(this.getId(), this.name, this.description, this.summary, this.price, this.stockQuantity, this.image, this.category, this.featuredStatus, this.activeStatus, this.deletedStatus);
     }
 }

@@ -25,6 +25,11 @@ public class CartEntity {
     public CartEntity() {
     }
 
+    public CartEntity(long id, UserEntity user) {
+        this.id = id;
+        this.user = user;
+    }
+
     public CartEntity(long id, UserEntity user, List<CartProductEntity> cartProducts) {
         this.id = id;
         this.user = user;

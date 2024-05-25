@@ -1,6 +1,8 @@
 package com.example.ecommerceSpring.dtos.users;
 
+import com.example.ecommerceSpring.dtos.ProductDto;
 import com.example.ecommerceSpring.entities.RoleEntity;
+import com.example.ecommerceSpring.entities.UserEntity;
 
 import java.util.Date;
 

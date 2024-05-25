@@ -1,16 +1,18 @@
 package com.example.ecommerceSpring.entities;
 
+import com.example.ecommerceSpring.dtos.Cart.CartItemDto;
 import jakarta.persistence.*;
 
 @Entity
 
 @Table(name = "cartProduct")
-public class CartProductEntity {
+public class
+CartProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private int quantity;
-    private int price;
+    private double price;
     private String owner;
     //relationship with cart
     @ManyToOne
@@ -25,7 +27,7 @@ public class CartProductEntity {
     public CartProductEntity() {
     }
 
-    public CartProductEntity(long id, int quantity, int price, String owner, CartEntity cart, ProductEntity product) {
+    public CartProductEntity(long id, int quantity, double price, String owner, CartEntity cart, ProductEntity product) {
         this.id = id;
         this.quantity = quantity;
         this.price = price;
@@ -50,11 +52,11 @@ public class CartProductEntity {
         this.quantity = quantity;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

@@ -1,6 +1,11 @@
 package com.example.ecommerceSpring.config;
 
+import com.example.ecommerceSpring.repositories.CartProductRepository;
 import com.example.ecommerceSpring.repositories.UserRepository;
+import com.example.ecommerceSpring.service.CartProductService;
+import com.example.ecommerceSpring.service.CartService;
+import com.example.ecommerceSpring.service.CategoryService;
+import com.example.ecommerceSpring.service.ProductService;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,6 +54,26 @@ public class ApplicationConfiguration {
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
+    }
+
+    @Bean
+    public CategoryService categoryService() {
+        return new CategoryService();
+    }
+
+    @Bean
+    public ProductService productService() {
+        return new ProductService();
+    }
+
+    @Bean
+    public CartService cartService() {
+        return new CartService();
+    }
+
+    @Bean
+    public CartProductService cartProductService() {
+        return new CartProductService();
     }
 
 }

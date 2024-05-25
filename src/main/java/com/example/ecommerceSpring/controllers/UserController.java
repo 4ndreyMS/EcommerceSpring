@@ -1,8 +1,10 @@
 package com.example.ecommerceSpring.controllers;
 
 import com.example.ecommerceSpring.dtos.users.UserDto;
+import com.example.ecommerceSpring.enums.RoleEnum;
 import com.example.ecommerceSpring.responses.ApiResponse;
 import com.example.ecommerceSpring.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +35,11 @@ public class UserController {
         List<UserDto> userModel = userService.allUsers();
 
         return ResponseEntity.ok(new ApiResponse<>(true, null, userModel));
+    }
+
+    @GetMapping("isAdmin")
+    public ResponseEntity<ApiResponse<Boolean>> isAdmin() {
+        return ResponseEntity.ok(new ApiResponse<>(true, null, userService.authenticatedUser().getRole().getName().equals(RoleEnum.ADMIN) || userService.authenticatedUser().getRole().getName().equals(RoleEnum.SUPER_ADMIN)));
     }
 
 
