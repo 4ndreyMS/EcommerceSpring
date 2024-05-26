@@ -51,4 +51,9 @@ public class ProductController {
     public ResponseEntity<ApiResponse<Boolean>> delete(@PathVariable long id) {
         return ResponseEntity.ok(new ApiResponse<>(true, null, productService.deleteById(id)));
     }
+
+    @GetMapping("/getAllFeatured")
+    public ResponseEntity<ApiResponse<List<ProductDto>>> getAllFeatured() {
+        return ResponseEntity.ok(new ApiResponse<>(true, null, productService.getAllFeatured()));
+    }
 }

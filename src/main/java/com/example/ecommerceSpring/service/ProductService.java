@@ -62,6 +62,15 @@ public class ProductService {
         return productDtos;
     }
 
+    public List<ProductDto> getAllFeatured() {
+        List<ProductEntity> productEntities = productRepository.getProductEntityByFeaturedStatusTrueAndDeletedStatusFalse();
+        List<ProductDto> productDtos = new ArrayList<>();
+        productEntities.forEach(productEntity -> {
+            productDtos.add(convertToDto(productEntity));
+        });
+        return productDtos;
+    }
+
     public boolean exist(ProductDto productDto) {
         return productRepository.existsById(productDto.getId());
     }

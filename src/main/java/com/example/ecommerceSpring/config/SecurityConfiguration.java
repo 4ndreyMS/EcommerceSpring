@@ -38,6 +38,7 @@ public class SecurityConfiguration {
                 .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource()))
                 .authorizeRequests(authorize -> authorize
                         .requestMatchers(new AntPathRequestMatcher("/auth/**", "POST"),
+                                new AntPathRequestMatcher("/api/v1/product/getAllFeatured", "GET"),
                                 new AntPathRequestMatcher("/api/v1/product/getAll", "GET"),
                                 new AntPathRequestMatcher("/api/v1/product/getById/**", "GET"))
                         .permitAll() // Allow POST requests to /user without authentication
@@ -56,7 +57,7 @@ public class SecurityConfiguration {
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowedOrigins(List.of("http://localhost:5173"));
-        configuration.setAllowedMethods(List.of("GET", "POST"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "DELETE", "PUT"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
