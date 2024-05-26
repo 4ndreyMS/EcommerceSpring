@@ -39,9 +39,9 @@ public class CartService {
     /*
      * this method add and updates the item in the cart
      */
-    public boolean addToCart(InsertDto insertDto) {
+    public CartItemDto addToCart(InsertDto insertDto) {
         currentUser = userService.authenticatedUser();
-        
+
         //validate if the provided product exist
         ProductDto product = productService.findById(insertDto.getProduct().getId());
         if (null == product) {
@@ -75,9 +75,11 @@ public class CartService {
             cartProduct.setQuantity(insertDto.getQuantity());
         }
 
-        cartProductRepository.save(cartProduct);
+        CartProductEntity newCartProductEntity = cartProductRepository.save(cartProduct);
 
-        return false;
+        ProductDto newProduct = modelMapper.map(newCartProductEntity.getProduct(), ProductDto.class);
+
+        return new CartItemDto(newProduct, newCartProductEntity.getQuantity(), newProduct.getPrice() * newCartProductEntity.getQuantity());
     }
 
     /*
@@ -145,5 +147,19 @@ public class CartService {
             throw new CustomException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return false;
+    }
+
+    public long cartItemsAmount() {
+        long counter = 0;
+        try {
+            List<CartItemDto> cartItemDtos = getCartItems();
+            for (CartItemDto cartItemDto : cartItemDtos) {
+                counter += cartItemDto.getQuantity();
+            }
+
+        } catch (Exception e) {
+            throw new CustomException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return counter;
     }
 }

@@ -29,7 +29,7 @@ public class CartController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ApiResponse<Boolean>> create(@RequestBody InsertDto insertDto) {
+    public ResponseEntity<ApiResponse<CartItemDto>> create(@RequestBody InsertDto insertDto) {
         //validate if the user with the jwt exit
         // validate if the product exist
         return ResponseEntity.ok(new ApiResponse<>(true, null, cartService.addToCart(insertDto)));
@@ -39,6 +39,12 @@ public class CartController {
     public ResponseEntity<ApiResponse<List<CartItemDto>>> getCartItems() {
         return ResponseEntity.ok(new ApiResponse<>(true, null, cartService.getCartItems()));
     }
+
+    @GetMapping("getCartCounter")
+    public ResponseEntity<ApiResponse<Long>> getCartCounter() {
+        return ResponseEntity.ok(new ApiResponse<>(true, null, cartService.cartItemsAmount()));
+    }
+
 
     @Transactional
     @DeleteMapping("/deleteCartItem/{productId}")
