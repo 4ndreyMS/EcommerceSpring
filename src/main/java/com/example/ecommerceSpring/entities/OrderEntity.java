@@ -24,6 +24,9 @@ public class OrderEntity {
     private String cardNumber;
     private String cardType;
     private String expiryDate;
+    private double totalAmount;
+    private double totalWithoutTax;
+    private double taxAmount;
     //relationships
     //rel to users
     @ManyToOne
@@ -51,6 +54,47 @@ public class OrderEntity {
         this.user = user;
     }
 
+    public OrderEntity(long id, OrderStatusEnum orderStatus, String addres1, String addres2, String city, String state, String zipCode, String cardNumber, String cardType, String expiryDate, double totalAmount, double totalWithoutTax, double taxAmount, UserEntity user, List<OrderProductEntity> orderProduct) {
+        this.id = id;
+        this.orderStatus = orderStatus;
+        this.addres1 = addres1;
+        this.addres2 = addres2;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+        this.cardNumber = cardNumber;
+        this.cardType = cardType;
+        this.expiryDate = expiryDate;
+        this.totalAmount = totalAmount;
+        this.totalWithoutTax = totalWithoutTax;
+        this.taxAmount = taxAmount;
+        this.user = user;
+        this.orderProduct = orderProduct;
+    }
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public double getTotalWithoutTax() {
+        return totalWithoutTax;
+    }
+
+    public void setTotalWithoutTax(double totalWithoutTax) {
+        this.totalWithoutTax = totalWithoutTax;
+    }
+
+    public double getTaxAmount() {
+        return taxAmount;
+    }
+
+    public void setTaxAmount(double taxAmount) {
+        this.taxAmount = taxAmount;
+    }
 
     public OrderStatusEnum getOrderStatus() {
         return orderStatus;

@@ -2,6 +2,7 @@ package com.example.ecommerceSpring.service;
 
 import com.example.ecommerceSpring.dtos.Cart.CartItemDto;
 import com.example.ecommerceSpring.dtos.Cart.OrderDto;
+import com.example.ecommerceSpring.dtos.ProductDto;
 import com.example.ecommerceSpring.dtos.users.UserDto;
 import com.example.ecommerceSpring.entities.CartProductEntity;
 import com.example.ecommerceSpring.entities.OrderEntity;
@@ -63,10 +64,9 @@ public class OrderService<T> {
         if (order.getOrderStatus() == null) {
             throw new CustomException("Invalid order status", HttpStatus.BAD_REQUEST);
         }
-        order.setUser(modelMapper.map(currentUser, UserEntity.class));
-//        order.setOrderStatus(statusConverter(order.getOrderStatus()));
         OrderEntity orderInfoEntity = modelMapper.map(order, OrderEntity.class);
         orderInfoEntity.setOrderStatus(order.getOrderStatus());
+        orderInfoEntity.setUser(modelMapper.map(currentUser, UserEntity.class));
         OrderEntity newOrder = orderRepository.save(orderInfoEntity);
         //sencond we transfer the items from cart to the middle table of order
         List<OrderProductEntity> cartItemsToOrderItem = getOrderProductEntities(newOrder);
@@ -107,9 +107,21 @@ public class OrderService<T> {
         }
     }
 
-    public List<OrderEntity> getCurrentUserOrdersInfo() {
+    public List<OrderDto> getCurrentUserOrdersInfo() {
+
         currentUser = userService.authenticatedUser();
         List<OrderEntity> orders = orderRepository.findByUser_Id(currentUser.getId());
-        return orders;
+        List<OrderDto> orderDtos = new ArrayList<>();
+        for (OrderEntity order : orders) {
+            OrderDto orderConverted = modelMapper.map(order, OrderDto.class);
+
+            List<CartItemDto> items = new ArrayList<>();
+            order.getOrderProduct().forEach(item -> {
+                items.add(new CartItemDto(modelMapper.map(item.getProduct(), ProductDto.class), item.getQuantity(), 0));
+            });
+            orderConverted.setOrderedItems(items);
+            orderDtos.add(orderConverted);
+        }
+        return orderDtos;
     }
 }

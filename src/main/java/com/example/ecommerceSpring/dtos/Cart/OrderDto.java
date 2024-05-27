@@ -5,6 +5,8 @@ import com.example.ecommerceSpring.enums.OrderStatusEnum;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 
+import java.util.List;
+
 public class OrderDto {
     private long id;
     private OrderStatusEnum orderStatus;
@@ -18,13 +20,16 @@ public class OrderDto {
     private String cardNumber;
     private String cardType;
     private String expiryDate;
-    private UserEntity user;
+    //    private UserEntity user;
+    private double totalAmount;
+    private double totalWithoutTax;
+    private double taxAmount;
+    List<CartItemDto> orderedItems;
 
     public OrderDto() {
     }
 
-    public OrderDto(UserEntity user, String expiryDate, String cardType, String cardNumber, String zipCode, String state, String city, String addres2, String addres1, OrderStatusEnum orderStatus, long id) {
-        this.user = user;
+    public OrderDto(String expiryDate, String cardType, String cardNumber, String zipCode, String state, String city, String addres2, String addres1, OrderStatusEnum orderStatus, long id) {
         this.expiryDate = expiryDate;
         this.cardType = cardType;
         this.cardNumber = cardNumber;
@@ -37,12 +42,53 @@ public class OrderDto {
         this.id = id;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public OrderDto(long id, OrderStatusEnum orderStatus, String addres1, String addres2, String city, String state, String zipCode, String cardNumber, String cardType, String expiryDate, UserEntity user, double totalAmount, double totalWithoutTax, double taxAmount, List<CartItemDto> orderedItems) {
+        this.id = id;
+        this.orderStatus = orderStatus;
+        this.addres1 = addres1;
+        this.addres2 = addres2;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+        this.cardNumber = cardNumber;
+        this.cardType = cardType;
+        this.expiryDate = expiryDate;
+        this.totalAmount = totalAmount;
+        this.totalWithoutTax = totalWithoutTax;
+        this.taxAmount = taxAmount;
+        this.orderedItems = orderedItems;
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
+    public List<CartItemDto> getOrderedItems() {
+        return orderedItems;
+    }
+
+    public void setOrderedItems(List<CartItemDto> orderedItems) {
+        this.orderedItems = orderedItems;
+    }
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public double getTotalWithoutTax() {
+        return totalWithoutTax;
+    }
+
+    public void setTotalWithoutTax(double totalWithoutTax) {
+        this.totalWithoutTax = totalWithoutTax;
+    }
+
+    public double getTaxAmount() {
+        return taxAmount;
+    }
+
+    public void setTaxAmount(double taxAmount) {
+        this.taxAmount = taxAmount;
     }
 
     public long getId() {
