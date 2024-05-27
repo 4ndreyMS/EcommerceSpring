@@ -109,6 +109,23 @@ public class CartService {
         return cartItems;
     }
 
+    public List<CartProductEntity> getCartProductItems() {
+        currentUser = userService.authenticatedUser();
+        List<CartProductEntity> cartProduct = new ArrayList<>();
+        try {
+            CartEntity cartEntity = cartRepository.findByUserId(this.currentUser.getId());
+
+            if (null != cartEntity) {
+
+                cartProduct = cartProductService.findByCartAndOwner(cartEntity.getId(), Long.toString(this.currentUser.getId()));
+            }
+        } catch (Exception e) {
+            throw new CustomException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return cartProduct;
+    }
+
     /*
      * Delete a product from the cart based on a product id
      * @Params: product id

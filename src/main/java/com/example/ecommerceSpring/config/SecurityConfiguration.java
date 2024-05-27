@@ -40,6 +40,7 @@ public class SecurityConfiguration {
                         .requestMatchers(new AntPathRequestMatcher("/auth/**", "POST"),
                                 new AntPathRequestMatcher("/api/v1/product/getAllFeatured", "GET"),
                                 new AntPathRequestMatcher("/api/v1/product/getAll", "GET"),
+                                new AntPathRequestMatcher("/api/v1/state/getAll", "GET"),
                                 new AntPathRequestMatcher("/api/v1/product/getById/**", "GET"))
                         .permitAll() // Allow POST requests to /user without authentication
                         .anyRequest().authenticated() // Ensures all requests are authenticated.

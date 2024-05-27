@@ -1,18 +1,12 @@
-package com.example.ecommerceSpring.entities;
+package com.example.ecommerceSpring.dtos.Cart;
 
+import com.example.ecommerceSpring.entities.UserEntity;
 import com.example.ecommerceSpring.enums.OrderStatusEnum;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
-import java.util.List;
-
-@Entity
-@Table(name = "orders")
-public class OrderEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class OrderDto {
     private long id;
-    @Enumerated(EnumType.STRING)
     private OrderStatusEnum orderStatus;
     //address form
     private String addres1;
@@ -24,40 +18,31 @@ public class OrderEntity {
     private String cardNumber;
     private String cardType;
     private String expiryDate;
-    //relationships
-    //rel to users
-    @ManyToOne
-    @JoinColumn(name = "id_user")
     private UserEntity user;
-    //rel to orders
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
-    List<OrderProductEntity> orderProduct;
 
-    //logic
-    public OrderEntity() {
+    public OrderDto() {
     }
 
-    public OrderEntity(long id, OrderStatusEnum orderStatus, String addres1, String addres2, String city, String state, String zipCode, String cardNumber, String cardType, String expiryDate, UserEntity user) {
-        this.id = id;
-        this.orderStatus = orderStatus;
-        this.addres1 = addres1;
-        this.addres2 = addres2;
-        this.city = city;
-        this.state = state;
-        this.zipCode = zipCode;
-        this.cardNumber = cardNumber;
-        this.cardType = cardType;
-        this.expiryDate = expiryDate;
+    public OrderDto(UserEntity user, String expiryDate, String cardType, String cardNumber, String zipCode, String state, String city, String addres2, String addres1, OrderStatusEnum orderStatus, long id) {
         this.user = user;
-    }
-
-
-    public OrderStatusEnum getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(OrderStatusEnum orderStatus) {
+        this.expiryDate = expiryDate;
+        this.cardType = cardType;
+        this.cardNumber = cardNumber;
+        this.zipCode = zipCode;
+        this.state = state;
+        this.city = city;
+        this.addres2 = addres2;
+        this.addres1 = addres1;
         this.orderStatus = orderStatus;
+        this.id = id;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 
     public long getId() {
@@ -66,6 +51,14 @@ public class OrderEntity {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public OrderStatusEnum getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatusEnum orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
     public String getAddres1() {
@@ -130,21 +123,5 @@ public class OrderEntity {
 
     public void setExpiryDate(String expiryDate) {
         this.expiryDate = expiryDate;
-    }
-
-    public UserEntity getUser() {
-        return user;
-    }
-
-    public void setUser(UserEntity user) {
-        this.user = user;
-    }
-
-    public List<OrderProductEntity> getOrderProduct() {
-        return orderProduct;
-    }
-
-    public void setOrderProduct(List<OrderProductEntity> orderProduct) {
-        this.orderProduct = orderProduct;
     }
 }

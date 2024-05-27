@@ -1,6 +1,8 @@
 package com.example.ecommerceSpring.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +17,7 @@ public class OrderProductEntity {
     //rel with order
     @ManyToOne
     @JoinColumn(name = "id_order")
+    @JsonIgnore
     private OrderEntity order;
     //relationship with product
     @ManyToOne
