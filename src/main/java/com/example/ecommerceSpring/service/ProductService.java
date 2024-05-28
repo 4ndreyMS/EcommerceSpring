@@ -54,7 +54,7 @@ public class ProductService {
     }
 
     public List<ProductDto> findAll() {
-        List<ProductEntity> productEntities = productRepository.findAll();
+        List<ProductEntity> productEntities = productRepository.getProductEntityByDeletedStatusFalse();
         List<ProductDto> productDtos = new ArrayList<>();
         productEntities.forEach(productEntity -> {
             productDtos.add(convertToDto(productEntity));
@@ -73,5 +73,9 @@ public class ProductService {
 
     public boolean exist(ProductDto productDto) {
         return productRepository.existsById(productDto.getId());
+    }
+
+    public boolean softDelete(ProductDto productDto) {
+        return productRepository.softDelete(productDto.isDeletedStatus(), productDto.getId()) > 0;
     }
 }

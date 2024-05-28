@@ -21,6 +21,11 @@ public class ProductDto {
     public ProductDto() {
     }
 
+    public ProductDto(long id, boolean deletedStatus) {
+        this.id = id;
+        this.deletedStatus = deletedStatus;
+    }
+
     public ProductDto(long id, String name, String description, String summary, double price, int stockQuantity, String image, CategoryEnum category, boolean featuredStatus, boolean activeStatus, boolean deletedStatus) {
         this.id = id;
         this.name = name;

@@ -56,4 +56,9 @@ public class ProductController {
     public ResponseEntity<ApiResponse<List<ProductDto>>> getAllFeatured() {
         return ResponseEntity.ok(new ApiResponse<>(true, null, productService.getAllFeatured()));
     }
+
+    @DeleteMapping("/softDelete/{id}")
+    public ResponseEntity<ApiResponse<Boolean>> softDelete(@PathVariable long id) {
+        return ResponseEntity.ok(new ApiResponse<>(true, null, productService.softDelete(new ProductDto(id, true))));
+    }
 }
