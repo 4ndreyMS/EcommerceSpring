@@ -27,6 +27,8 @@ public class OrderEntity {
     private double totalAmount;
     private double totalWithoutTax;
     private double taxAmount;
+    private long totalItemsAmount;
+    private String creationDate;
     //relationships
     //rel to users
     @ManyToOne
@@ -38,6 +40,46 @@ public class OrderEntity {
 
     //logic
     public OrderEntity() {
+    }
+
+
+    public OrderEntity(long id, OrderStatusEnum orderStatus, String addres1, String addres2, String city, String state, String zipCode, String cardNumber, String cardType, String expiryDate, double totalAmount, double totalWithoutTax, double taxAmount, long totalItemsAmount, String creationDate, UserEntity user, List<OrderProductEntity> orderProduct) {
+        this.id = id;
+        this.orderStatus = orderStatus;
+        this.addres1 = addres1;
+        this.addres2 = addres2;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+        this.cardNumber = cardNumber;
+        this.cardType = cardType;
+        this.expiryDate = expiryDate;
+        this.totalAmount = totalAmount;
+        this.totalWithoutTax = totalWithoutTax;
+        this.taxAmount = taxAmount;
+        this.totalItemsAmount = totalItemsAmount;
+        this.creationDate = creationDate;
+        this.user = user;
+        this.orderProduct = orderProduct;
+    }
+
+    public OrderEntity(long id, OrderStatusEnum orderStatus, String addres1, String addres2, String city, String state, String zipCode, String cardNumber, String cardType, String expiryDate, double totalAmount, double totalWithoutTax, double taxAmount, long totalItemsAmount, String creationDate, UserEntity user) {
+        this.id = id;
+        this.orderStatus = orderStatus;
+        this.addres1 = addres1;
+        this.addres2 = addres2;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+        this.cardNumber = cardNumber;
+        this.cardType = cardType;
+        this.expiryDate = expiryDate;
+        this.totalAmount = totalAmount;
+        this.totalWithoutTax = totalWithoutTax;
+        this.taxAmount = taxAmount;
+        this.totalItemsAmount = totalItemsAmount;
+        this.creationDate = creationDate;
+        this.user = user;
     }
 
     public OrderEntity(long id, OrderStatusEnum orderStatus, String addres1, String addres2, String city, String state, String zipCode, String cardNumber, String cardType, String expiryDate, UserEntity user) {
@@ -70,6 +112,22 @@ public class OrderEntity {
         this.taxAmount = taxAmount;
         this.user = user;
         this.orderProduct = orderProduct;
+    }
+
+    public String getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public long getTotalItemsAmount() {
+        return totalItemsAmount;
+    }
+
+    public void setTotalItemsAmount(long totalItemsAmount) {
+        this.totalItemsAmount = totalItemsAmount;
     }
 
     public double getTotalAmount() {

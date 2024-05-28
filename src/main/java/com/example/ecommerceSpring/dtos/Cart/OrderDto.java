@@ -24,9 +24,48 @@ public class OrderDto {
     private double totalAmount;
     private double totalWithoutTax;
     private double taxAmount;
+    private long totalItemsAmount;
+    private String creationDate;
     List<CartItemDto> orderedItems;
 
     public OrderDto() {
+    }
+
+    public OrderDto(long id, OrderStatusEnum orderStatus, String addres1, String addres2, String city, String state, String zipCode, String cardNumber, String cardType, String expiryDate, double totalAmount, double totalWithoutTax, double taxAmount, long totalItemsAmount, String creationDate) {
+        this.id = id;
+        this.orderStatus = orderStatus;
+        this.addres1 = addres1;
+        this.addres2 = addres2;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+        this.cardNumber = cardNumber;
+        this.cardType = cardType;
+        this.expiryDate = expiryDate;
+        this.totalAmount = totalAmount;
+        this.totalWithoutTax = totalWithoutTax;
+        this.taxAmount = taxAmount;
+        this.totalItemsAmount = totalItemsAmount;
+        this.creationDate = creationDate;
+    }
+
+    public OrderDto(long id, OrderStatusEnum orderStatus, String addres1, String addres2, String city, String state, String zipCode, String cardNumber, String cardType, String expiryDate, double totalAmount, double totalWithoutTax, double taxAmount, long totalItemsAmount, String creationDate, List<CartItemDto> orderedItems) {
+        this.id = id;
+        this.orderStatus = orderStatus;
+        this.addres1 = addres1;
+        this.addres2 = addres2;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+        this.cardNumber = cardNumber;
+        this.cardType = cardType;
+        this.expiryDate = expiryDate;
+        this.totalAmount = totalAmount;
+        this.totalWithoutTax = totalWithoutTax;
+        this.taxAmount = taxAmount;
+        this.totalItemsAmount = totalItemsAmount;
+        this.creationDate = creationDate;
+        this.orderedItems = orderedItems;
     }
 
     public OrderDto(String expiryDate, String cardType, String cardNumber, String zipCode, String state, String city, String addres2, String addres1, OrderStatusEnum orderStatus, long id) {
@@ -57,6 +96,22 @@ public class OrderDto {
         this.totalWithoutTax = totalWithoutTax;
         this.taxAmount = taxAmount;
         this.orderedItems = orderedItems;
+    }
+
+    public String getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public long getTotalItemsAmount() {
+        return totalItemsAmount;
+    }
+
+    public void setTotalItemsAmount(long totalItemsAmount) {
+        this.totalItemsAmount = totalItemsAmount;
     }
 
     public List<CartItemDto> getOrderedItems() {

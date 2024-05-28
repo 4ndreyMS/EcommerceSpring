@@ -8,6 +8,7 @@ import com.example.ecommerceSpring.responses.ApiResponse;
 import com.example.ecommerceSpring.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +27,14 @@ public class OrderController {
     }
 
     @GetMapping("/allUserOrders")
-    public ResponseEntity<ApiResponse<List<OrderEntity>>> getAllUserOrders() {
+    public ResponseEntity<ApiResponse<List<OrderDto>>> getAllUserOrders() {
         return ResponseEntity.ok(new ApiResponse<>(true, null, orderService.getCurrentUserOrdersInfo()));
     }
 
+    @GetMapping("/allOrder")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    public ResponseEntity<ApiResponse<List<OrderDto>>> getAllOrder() {
+        return ResponseEntity.ok(new ApiResponse<>(true, null, orderService.getAllOrdersInfo()));
+
+    }
 }

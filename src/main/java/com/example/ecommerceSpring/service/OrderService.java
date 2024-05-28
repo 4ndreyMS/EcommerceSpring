@@ -9,6 +9,7 @@ import com.example.ecommerceSpring.entities.OrderEntity;
 import com.example.ecommerceSpring.entities.OrderProductEntity;
 import com.example.ecommerceSpring.entities.UserEntity;
 import com.example.ecommerceSpring.enums.OrderStatusEnum;
+import com.example.ecommerceSpring.enums.RoleEnum;
 import com.example.ecommerceSpring.exception.CustomException;
 import com.example.ecommerceSpring.repositories.OrderRepository;
 import io.micrometer.common.util.StringUtils;
@@ -16,7 +17,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.example.ecommerceSpring.enums.OrderStatusEnum.CONFIRMED;
@@ -67,6 +70,10 @@ public class OrderService<T> {
         OrderEntity orderInfoEntity = modelMapper.map(order, OrderEntity.class);
         orderInfoEntity.setOrderStatus(order.getOrderStatus());
         orderInfoEntity.setUser(modelMapper.map(currentUser, UserEntity.class));
+
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        orderInfoEntity.setCreationDate(formatter.format(date));
         OrderEntity newOrder = orderRepository.save(orderInfoEntity);
         //sencond we transfer the items from cart to the middle table of order
         List<OrderProductEntity> cartItemsToOrderItem = getOrderProductEntities(newOrder);
@@ -108,9 +115,19 @@ public class OrderService<T> {
     }
 
     public List<OrderDto> getCurrentUserOrdersInfo() {
-
         currentUser = userService.authenticatedUser();
-        List<OrderEntity> orders = orderRepository.findByUser_Id(currentUser.getId());
+        return convertOrdersToDto(orderRepository.findByUser_Id(currentUser.getId()));
+    }
+
+    public List<OrderDto> getAllOrdersInfo() {
+        currentUser = userService.authenticatedUser();
+        if (currentUser.getRole().getName().equals(RoleEnum.USER)) {
+            return new ArrayList<>();
+        }
+        return convertOrdersToDto(orderRepository.findAll());
+    }
+
+    private List<OrderDto> convertOrdersToDto(List<OrderEntity> orders) {
         List<OrderDto> orderDtos = new ArrayList<>();
         for (OrderEntity order : orders) {
             OrderDto orderConverted = modelMapper.map(order, OrderDto.class);
@@ -122,6 +139,7 @@ public class OrderService<T> {
             orderConverted.setOrderedItems(items);
             orderDtos.add(orderConverted);
         }
+
         return orderDtos;
     }
 }
