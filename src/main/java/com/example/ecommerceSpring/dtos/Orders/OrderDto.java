@@ -1,9 +1,8 @@
-package com.example.ecommerceSpring.dtos.Cart;
+package com.example.ecommerceSpring.dtos.Orders;
 
+import com.example.ecommerceSpring.dtos.Cart.CartItemDto;
 import com.example.ecommerceSpring.entities.UserEntity;
 import com.example.ecommerceSpring.enums.OrderStatusEnum;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 
 import java.util.List;
 

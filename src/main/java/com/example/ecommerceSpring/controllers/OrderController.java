@@ -1,9 +1,7 @@
 package com.example.ecommerceSpring.controllers;
 
-import com.example.ecommerceSpring.dtos.Cart.CartItemDto;
-import com.example.ecommerceSpring.dtos.Cart.OrderDto;
-import com.example.ecommerceSpring.dtos.users.InsertDto;
-import com.example.ecommerceSpring.entities.OrderEntity;
+import com.example.ecommerceSpring.dtos.Orders.OrderDto;
+import com.example.ecommerceSpring.dtos.Orders.OrderWithUserDto;
 import com.example.ecommerceSpring.responses.ApiResponse;
 import com.example.ecommerceSpring.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +34,16 @@ public class OrderController {
     public ResponseEntity<ApiResponse<List<OrderDto>>> getAllOrder() {
         return ResponseEntity.ok(new ApiResponse<>(true, null, orderService.getAllOrdersInfo()));
 
+    }
+
+    @GetMapping("/getById/{id}")
+    public ResponseEntity<ApiResponse<OrderWithUserDto>> findById(@PathVariable long id) {
+        return ResponseEntity.ok(new ApiResponse<>(true, null, orderService.findById(id)));
+    }
+
+    @PutMapping("/updateStatus")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    public ResponseEntity<ApiResponse<Boolean>> updateStatus(@RequestBody OrderDto orderInfo) {
+        return ResponseEntity.ok(new ApiResponse<>(true, null, orderService.updateOrderStatus(orderInfo)));
     }
 }

@@ -1,7 +1,9 @@
 package com.example.ecommerceSpring.service;
 
 import com.example.ecommerceSpring.dtos.Cart.CartItemDto;
-import com.example.ecommerceSpring.dtos.Cart.OrderDto;
+import com.example.ecommerceSpring.dtos.Orders.OrderDto;
+import com.example.ecommerceSpring.dtos.Orders.OrderItemDto;
+import com.example.ecommerceSpring.dtos.Orders.OrderWithUserDto;
 import com.example.ecommerceSpring.dtos.ProductDto;
 import com.example.ecommerceSpring.dtos.users.UserDto;
 import com.example.ecommerceSpring.entities.CartProductEntity;
@@ -21,8 +23,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static com.example.ecommerceSpring.enums.OrderStatusEnum.CONFIRMED;
 
 public class OrderService<T> {
     @Autowired
@@ -141,5 +141,37 @@ public class OrderService<T> {
         }
 
         return orderDtos;
+    }
+
+    public OrderWithUserDto findById(Long id) {
+        currentUser = userService.authenticatedUser();
+        OrderEntity order = orderRepository.findById(id).orElse(null);
+        if (null == order) {
+            return null;
+        }
+
+        OrderWithUserDto orderDto = modelMapper.map(order, OrderWithUserDto.class);
+        List<OrderItemDto> items = new ArrayList<>();
+        order.getOrderProduct().forEach(item -> {
+            items.add(new OrderItemDto(modelMapper.map(item.getProduct(), ProductDto.class), item.getQuantity(), 0, modelMapper.map(order.getUser(), UserDto.class)));
+        });
+        orderDto.setOrderedItems(items);
+
+        return orderDto;
+    }
+
+    public boolean updateOrderStatus(OrderDto orderToUpdate) {
+        if (!orderRepository.existsById(orderToUpdate.getId())) {
+            throw new CustomException("Order not found", HttpStatus.NOT_FOUND);
+        }
+        if (currentUser.getRole().getName().equals(RoleEnum.USER)) {
+            throw new CustomException("Forbiden action", HttpStatus.FORBIDDEN);
+        }
+
+        int response = orderRepository.updateOrderStatus(orderToUpdate.getOrderStatus(), orderToUpdate.getId());
+        if (response > 0) {
+            return true;
+        }
+        return false;
     }
 }
