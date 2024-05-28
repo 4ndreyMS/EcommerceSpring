@@ -7,6 +7,7 @@ import com.example.ecommerceSpring.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +28,8 @@ public class ProductController {
         return ResponseEntity.ok(new ApiResponse<>(true, null, productService.save(newProduct)));
     }
 
-    @PutMapping("/update")
+    @PostMapping("/update")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     public ResponseEntity<ApiResponse<ProductDto>> update(@RequestBody ProductDto newProduct) {
         //validate if the product al ready exist
         if (!productService.exist(newProduct)) {
